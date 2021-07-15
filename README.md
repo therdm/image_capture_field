@@ -8,10 +8,10 @@ ImageCaptureField is as easy-to-use as a TextField which works with it's own con
 
 final imageCaptureController = ImageCaptureController();
 
-getters in the ImageCaptureController
-   imageName => name of the picked image 
-   imageData => image data in Uint8List
-   isBlank => there is any image already picked or not
+getters in the ImageCaptureController <br />
+&nbsp; &nbsp;  `imageName => name of the picked image` <br />
+&nbsp; &nbsp;  `imageData => image data in Uint8List` <br />
+&nbsp; &nbsp;  `isBlank => there is any image already picked or not` <br />
 you can use where ever needed
 
 ### Put as a child of any child or may be as a children of Column
