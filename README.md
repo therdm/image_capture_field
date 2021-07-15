@@ -1,8 +1,36 @@
 # image_capture_field
 
-A field works with own controller to take user input image
+ImageCaptureField is as easy-to-use as a TextField which works with it's own controller to take image input
 
 ## Getting Started
+
+###Define a ImageCaptureController
+final imageCaptureController = ImageCaptureController();
+
+getters in the ImageCaptureController
+   imageName => name of the picked image 
+   imageData => image data in Uint8List
+   isBlank => there is any image already picked or not
+you can use where ever needed
+
+###Put as a child of any child or may be as a children of Column
+Just like below Code put it anywhere in your code
+`ImageCaptureField(
+                 controller: imageCaptureController,
+                 width: 300,
+                 height: 200,
+                 borderRadiusValue: 10,
+                 bottomRightDistance: 24,
+               ),`
+And it is done
+you can now pick any image and access it by 
+`imageCaptureController.imageData`
+
+###Crop functionality added you can use it by setting 
+####In the ImageCaptureField() pass the property:
+includeCropper: true
+####To fix cropper aspect ratio
+aspectRatio : width / height or whatever you want
 
 This project is a starting point for a Dart
 [package](https://flutter.dev/developing-packages/),

@@ -1,7 +1,7 @@
 name: image_capture_field
-description: A field works with own controller to take user input image
-version: 0.0.1
-homepage:
+description: ImageCaptureField is as easy-to-use as a TextField which works with it's own controller to take image input
+version: 0.0.6
+homepage: https://github.com/therdm95/image_capture_field
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
   image_picker: ^0.8.1+3
   get: ^4.1.4
+  crop_your_image: ^0.5.3
 
 dev_dependencies:
   flutter_test:
