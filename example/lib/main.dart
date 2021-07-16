@@ -30,11 +30,10 @@ class Initializer extends StatelessWidget {
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(8.0),
+          width: double.infinity,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              TextField(
-                controller: textEditingController,
-              ),
               SizedBox(height: 12),
               ImageCaptureField(
                 controller: imageCaptureController,
@@ -45,13 +44,13 @@ class Initializer extends StatelessWidget {
                 borderRadiusValue: 10,
                 bottomRightDistance: 24,
               ),
-              ElevatedButton(
-                onPressed: () {
-                  print(imageCaptureController.imageName);
-                  // print(imageCaptureController.isBlank);
-                },
-                child: Text('Show info'),
-              ),
+              // ElevatedButton(
+              //   onPressed: () {
+              //     print(imageCaptureController.imageName);
+              //     // print(imageCaptureController.isBlank);
+              //   },
+              //   child: Text('Show info'),
+              // ),
             ],
           ),
         ),

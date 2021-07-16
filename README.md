@@ -1,6 +1,6 @@
 # image_capture_field
 
-ImageCaptureField is as easy-to-use as a TextField which works with it's own controller to take image input
+ImageCaptureField is as easy-to-use as a TextField which works with it's own controller to take image input with inbuilt optional image cropper
 
 ## Getting Started
 
@@ -37,6 +37,7 @@ you can now pick any image and access it by
 #### In the ImageCaptureField() pass the property:
 
 `includeCropper: true`
+
 #### To fix cropper aspect ratio
 
 `spectRatio : width / height or any double`

@@ -124,7 +124,7 @@ class ImageCaptureField extends StatelessWidget {
                       ? null
                       : DecorationImage(
                           image: MemoryImage(controller.imageData!),
-                          fit: BoxFit.fitWidth,
+                          fit: BoxFit.contain,
                         ),
                 ),
               ),
