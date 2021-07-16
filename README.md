@@ -4,14 +4,15 @@ ImageCaptureField is as easy-to-use as a TextField which works with it's own con
 
 ## Getting Started
 
+
 ### Define a ImageCaptureController
 
-final imageCaptureController = ImageCaptureController();
+`final imageCaptureController = ImageCaptureController();`
 
-getters in the ImageCaptureController <br />
-&nbsp; &nbsp;  `imageName => name of the picked image` <br />
-&nbsp; &nbsp;  `imageData => image data in Uint8List` <br />
-&nbsp; &nbsp;  `isBlank => there is any image already picked or not` <br />
+getters in the ImageCaptureController <br /><br />
+&nbsp; &nbsp;  `imageCaptureController.imageName => name of the picked image` <br /><br/>
+&nbsp; &nbsp;  `imageCaptureController.imageData => image data in Uint8List` <br /><br/>
+&nbsp; &nbsp;  `imageCaptureController.isBlank => there is any image already picked or not` <br /><br/>
 you can use where ever needed
 
 ### Put as a child of any child or may be as a children of Column
@@ -19,7 +20,7 @@ you can use where ever needed
 Just like below Code put it anywhere in your code
 
 ```
-ImageCaptureController(
+ImageCaptureField(
     controller: imageCaptureController,
     width: 300,
     height: 200,
@@ -29,7 +30,7 @@ ImageCaptureController(
 ```
                
 And it is done
-you can now pick any image and access it by 
+you can now pick any image and access it by <br?
 `imageCaptureController.imageData`
 
 ### Crop functionality added you can use it by setting 
@@ -41,6 +42,17 @@ you can now pick any image and access it by
 #### To fix cropper aspect ratio
 
 `spectRatio : width / height or any double`
+
+## Some Screenshots
+
+<div style="display: flex; justify-content: space-between;">
+    <img src="https://i.postimg.cc/hPTcZctq/1.jpg" width="250px" alt="1"/>&nbsp; &nbsp;
+    <img src="https://i.postimg.cc/0yvxLFzK/2.jpg" width="250px" alt="2"/>&nbsp; &nbsp;
+    <img src="https://i.postimg.cc/wBTzBNc6/3.jpg" width="250px" alt="3"/>&nbsp; &nbsp;
+    <img src="https://i.postimg.cc/857VRV09/4.jpg" width="250px" alt="4"/>&nbsp; &nbsp;
+    <img src="https://i.postimg.cc/0NWsKNc7/5.jpg" width="250px" alt="5"/>&nbsp; &nbsp;
+    <img src="https://i.postimg.cc/mgSRRj9X/6.jpg" width="250px" alt="6"/>&nbsp; &nbsp;
+</div>
 
 This project is a starting point for a Dart
 [package](https://flutter.dev/developing-packages/),
