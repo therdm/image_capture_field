@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_capture_field/image_capture_field.dart';
 
 void main() {
@@ -19,8 +18,7 @@ class MyApp extends StatelessWidget {
 
 class Initializer extends StatelessWidget {
   Initializer({Key? key}) : super(key: key);
-  final textEditingController = TextEditingController();
-  final imageCaptureController = ImageCaptureController();
+  final _controller = ImageCaptureController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,21 +34,23 @@ class Initializer extends StatelessWidget {
             children: [
               SizedBox(height: 12),
               ImageCaptureField(
-                controller: imageCaptureController,
+                controller: _controller,
                 width: 300,
-                height: 200,
-                cropAspectRatio: 3 / 2,
+                height: 300,
                 includeCropper: true,
+                cropAspectRatio: 300 / 300,
                 borderRadiusValue: 10,
-                bottomRightDistance: 24,
+                bottomRightDistance: 10,
+                iconBackgroundColor: Colors.red,
               ),
-              // ElevatedButton(
-              //   onPressed: () {
-              //     print(imageCaptureController.imageName);
-              //     // print(imageCaptureController.isBlank);
-              //   },
-              //   child: Text('Show info'),
-              // ),
+              SizedBox(height: 12),
+              ElevatedButton(
+                onPressed: () {
+                  print(_controller.imageName);
+                  print(_controller.isBlank);
+                },
+                child: Text('Show Info'),
+              ),
             ],
           ),
         ),

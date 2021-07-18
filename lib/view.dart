@@ -11,6 +11,7 @@ class ImageCaptureField extends StatelessWidget {
     this.imageQuality = 12,
     this.borderRadiusValue = 16,
     this.bottomRightDistance = 12,
+    this.iconBackgroundColor = Colors.teal,
   }) : super(key: key);
 
   ///this [width] is the height of the widget
@@ -37,7 +38,12 @@ class ImageCaptureField extends StatelessWidget {
   ///you need to pass a controller of type [ImageCaptureController] type
   ///to handle the image you picked
   final ImageCaptureController controller;
+
+  ///[iconBackgroundColor] defines what color will be there background of the icons
+  final Color iconBackgroundColor;
+
   final _picker = ImagePicker();
+  final Rx<bool> _showLoading = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -47,14 +53,10 @@ class ImageCaptureField extends StatelessWidget {
         imageQuality: imageQuality,
       );
 
-      if (pickedFile != null) {
-        pickedFile.readAsBytes().then((value) {
-          controller.updatePickedImage(value, pickedFile.path);
-          print('Image Name: ${controller.imageName}');
-        });
-      } //if
-
-      Navigator.of(context).pop();
+      controller.updatePickedImage(
+          await pickedFile?.readAsBytes(), pickedFile?.path);
+      print('Image Name: ${controller.imageName}');
+      if (!kIsWeb) Navigator.of(context).pop();
     }
 
     updateImageWithCropper(ImageSource imageSource) {
@@ -65,7 +67,9 @@ class ImageCaptureField extends StatelessWidget {
       )
           .then((pickedFile) {
         if (pickedFile != null) {
+          _showLoading.value = true;
           pickedFile.readAsBytes().then((value) async {
+            _showLoading.value = false;
             Uint8List? result = await Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (ctx) => CropTheImage(
@@ -76,8 +80,7 @@ class ImageCaptureField extends StatelessWidget {
           });
         } //if ends
       });
-
-      Navigator.of(context).pop();
+      if (!kIsWeb) Navigator.of(context).pop();
     }
 
     return Obx(() {
@@ -86,12 +89,13 @@ class ImageCaptureField extends StatelessWidget {
           if (kIsWeb) {
             includeCropper
                 ? updateImageWithCropper(ImageSource.gallery)
-                : updateImageWOCropper(ImageSource.gallery);
+                : updateImageWOCropper(ImageSource.camera);
           } else {
             showModalBottomSheet(
               context: context,
               builder: (ctx) {
                 return OpenWithCameraOrGallery(
+                  iconBackgroundColor: iconBackgroundColor,
                   onTapCamera: () {
                     includeCropper
                         ? updateImageWithCropper(ImageSource.camera)
@@ -107,130 +111,45 @@ class ImageCaptureField extends StatelessWidget {
             );
           }
         },
-        child: Stack(
-          children: [
-            Material(
-              borderRadius:
-                  BorderRadius.all(Radius.circular(borderRadiusValue)),
-              clipBehavior: Clip.hardEdge,
-              elevation: 6,
-              child: Container(
-                alignment: Alignment.bottomRight,
-                width: width,
-                height: height,
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  image: controller.isBlank
-                      ? null
-                      : DecorationImage(
-                          image: MemoryImage(controller.imageData!),
-                          fit: BoxFit.contain,
-                        ),
-                ),
+        child: _showLoading.value
+            ? Center(child: Text('LOADING...'))
+            : Stack(
+                children: [
+                  Material(
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(borderRadiusValue)),
+                    clipBehavior: Clip.hardEdge,
+                    elevation: 6,
+                    child: Container(
+                      alignment: Alignment.bottomRight,
+                      width: width,
+                      height: height,
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        image: controller.isBlank
+                            ? null
+                            : DecorationImage(
+                                image: MemoryImage(controller.imageData!),
+                                fit: BoxFit.cover,
+                              ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: bottomRightDistance,
+                    right: bottomRightDistance,
+                    child: CircleAvatar(
+                      backgroundColor: iconBackgroundColor,
+                      radius: 20,
+                      child: Icon(
+                        Icons.camera_alt,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            Positioned(
-              bottom: bottomRightDistance,
-              right: bottomRightDistance,
-              child: CircleAvatar(
-                backgroundColor: Colors.teal,
-                radius: 20,
-                child: Icon(
-                  Icons.camera_alt,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ],
-        ),
       );
     });
-  }
-}
-
-class OpenWithCameraOrGallery extends StatelessWidget {
-  final Function() onTapCamera;
-  final Function() onTapGallery;
-  const OpenWithCameraOrGallery({
-    Key? key,
-    required this.onTapCamera,
-    required this.onTapGallery,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.black,
-      child: Padding(
-        padding: const EdgeInsets.all(18),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(5, 0, 5, 25),
-              child: Text(
-                'Open with',
-                textScaleFactor: 1.2,
-                style: const TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const SizedBox(width: 20),
-                OpenWithButton(
-                  iconName: 'Camera',
-                  iconData: Icons.camera_alt,
-                  onTap: onTapCamera,
-                ),
-                const SizedBox(width: 30),
-                OpenWithButton(
-                  iconName: 'Gallery',
-                  iconData: Icons.photo,
-                  onTap: onTapGallery,
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class OpenWithButton extends StatelessWidget {
-  const OpenWithButton({
-    Key? key,
-    required this.onTap,
-    required this.iconData,
-    required this.iconName,
-  }) : super(key: key);
-  final Function() onTap;
-  final IconData iconData;
-  final String iconName;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Column(
-        children: [
-          CircleAvatar(
-            backgroundColor: Colors.teal,
-            child: Icon(iconData),
-          ),
-          const SizedBox(height: 5),
-          Text(
-            iconName,
-            textScaleFactor: 0.9,
-            style: const TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }

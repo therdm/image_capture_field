@@ -1,3 +1,16 @@
+## 0.1.3
+
+Cleaner ReadMe and option to give icons background color added. to match this widget according to your theme
+
+## 0.1.2
+
+Bug fix in web support and showing Loading... when going to cropper page
+
+## 0.1.1
+
+More clean and clear ReadMe and some screenshots
+ 
+
 ## 0.1.0
 
 Crop functionality added you can use it by setting 

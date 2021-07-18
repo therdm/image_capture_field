@@ -1,6 +1,6 @@
 name: image_capture_field
 description: ImageCaptureField is as easy-to-use as a TextField which works with it's own controller to take image input with inbuilt optional image cropper
-version: 0.1.0
+version: 0.1.3
 homepage: https://github.com/therdm95/image_capture_field
 
 environment:

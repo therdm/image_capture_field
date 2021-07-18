@@ -35,7 +35,6 @@ class CropTheImage extends StatelessWidget {
               onCropped: (image) {
                 outputImageData.value = image;
                 _controller.area = Rect.largest;
-
                 // _controller.aspectRatio = 1;
                 // do something with image data
               },
@@ -48,7 +47,6 @@ class CropTheImage extends StatelessWidget {
                   outputImageData.value == null
                       ? ElevatedButton.icon(
                           onPressed: () {
-                            print('Done cropped button tapped');
                             _controller.crop();
                           },
                           style: ButtonStyle(
@@ -60,7 +58,6 @@ class CropTheImage extends StatelessWidget {
                         )
                       : ElevatedButton.icon(
                           onPressed: () {
-                            print('Done cropped button tapped');
                             Navigator.of(context).pop(outputImageData.value);
                           },
                           style: ButtonStyle(

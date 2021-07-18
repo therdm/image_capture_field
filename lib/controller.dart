@@ -4,15 +4,31 @@ class ImageCaptureController {
   Rxn<Uint8List> _pickedImageUInt8List = Rxn<Uint8List>();
   String? _imageName;
 
-  updatePickedImage(Uint8List? uInt8list, String path) {
+  updatePickedImage(Uint8List? uInt8list, String? path) {
     if (uInt8list != null) {
       _pickedImageUInt8List.value = uInt8list;
-      if (!kIsWeb) _imageName = path.split('/').last;
+      if (!kIsWeb)
+        _imageName = path?.split('/').last;
+      else
+        _imageName = path;
       print('Image add Successful');
     } else {
       print('Image add un-successful');
     }
   }
+  //
+  // updatePickedImageWeb(PickedFile? file) async {
+  //   if (file != null) {
+  //     _pickedImageUInt8List.value = await file.readAsBytes();
+  //     if (!kIsWeb)
+  //       _imageName = file.path.split('/').last;
+  //     else
+  //       _imageName = file.path;
+  //     print('Image add Successful');
+  //   } else {
+  //     print('Image add un-successful');
+  //   }
+  // }
 
   ///[isBlankU] says whether the [imageData] is null or not
   bool get isBlank => _pickedImageUInt8List.value == null;
