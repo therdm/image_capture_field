@@ -1,3 +1,8 @@
+## 0.2.0
+
+width and height properties are no more required , and a new property initialImage (ImageProvider) added
+and includeCropper is now by default set to true, you need to set it to false if you don't need it
+
 ## 0.1.3
 
 Cleaner ReadMe and option to give icons background color added. to match this widget according to your theme

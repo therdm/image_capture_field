@@ -4,10 +4,11 @@ class ImageCaptureField extends StatelessWidget {
   ImageCaptureField({
     Key? key,
     required this.controller,
-    required this.width,
-    required this.height,
+    this.width,
+    this.height,
+    this.initialImage,
     this.cropAspectRatio,
-    this.includeCropper = false,
+    this.includeCropper = true,
     this.imageQuality = 12,
     this.borderRadiusValue = 16,
     this.bottomRightDistance = 12,
@@ -15,10 +16,13 @@ class ImageCaptureField extends StatelessWidget {
   }) : super(key: key);
 
   ///this [width] is the height of the widget
-  final double width;
+  final double? width;
 
   ///this [height] is the height of the widget
-  final double height;
+  final double? height;
+
+  ///this [initialImage] if to set an initial image if not set
+  final ImageProvider? initialImage;
 
   ///this [cropAspectRatio] is the aspectRatio for the cropper
   final double? cropAspectRatio;
@@ -124,15 +128,15 @@ class ImageCaptureField extends StatelessWidget {
                       alignment: Alignment.bottomRight,
                       width: width,
                       height: height,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        image: controller.isBlank
-                            ? null
-                            : DecorationImage(
-                                image: MemoryImage(controller.imageData!),
-                                fit: BoxFit.cover,
-                              ),
-                      ),
+                      constraints: BoxConstraints(minWidth: 60, minHeight: 60),
+                      decoration: BoxDecoration(color: Colors.grey),
+                      child: (controller.isBlank && initialImage == null)
+                          ? null
+                          : Image(
+                              image: controller.isBlank
+                                  ? initialImage!
+                                  : MemoryImage(controller.imageData!),
+                            ),
                     ),
                   ),
                   Positioned(
