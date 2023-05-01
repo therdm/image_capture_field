@@ -1,3 +1,9 @@
+## 0.2.5
+
+Package updated to latest version, and now controller have imagePath getter, 
+and now ImageCaptureController is no longer required
+and added onImageChanged
+
 ## 0.2.4
 
 default imageQuality is now set to 100

@@ -1,16 +1,21 @@
 part of image_capture_field;
 
 class ImageCaptureController {
-  Rxn<Uint8List> _pickedImageUInt8List = Rxn<Uint8List>();
-  String? _imageName;
+
+  ImageCaptureController();
+
+  final Rxn<Uint8List> _pickedImageUInt8List = Rxn<Uint8List>();
+  final RxnString _imageName = RxnString();
+  final RxnString _imagePath = RxnString();
 
   updatePickedImage(Uint8List? uInt8list, String? path) {
+    _imagePath.value = path;
     if (uInt8list != null) {
       _pickedImageUInt8List.value = uInt8list;
       if (!kIsWeb)
-        _imageName = path?.split('/').last;
+        _imageName.value = path?.split('/').last;
       else
-        _imageName = path;
+        _imageName.value = path;
       print('Image add Successful');
     } else {
       print('Image add un-successful');
@@ -19,7 +24,7 @@ class ImageCaptureController {
 
   clear() {
     _pickedImageUInt8List.value = null;
-    _imageName = null;
+    _imageName.value = null;
   }
   //
   // updatePickedImageWeb(PickedFile? file) async {
@@ -46,7 +51,11 @@ class ImageCaptureController {
   ///for example: for file => File.fromRawPath(imageData);
   Uint8List? get imageData => _pickedImageUInt8List.value;
 
-  ///below [imageName] getter returns name of the image which you can use
+  ///[imageName] getter returns name of the image which you can use
   ///to upload image to the server
-  String? get imageName => _imageName;
+  String? get imageName => _imageName.value;
+
+  ///[imagePath] getter returns name of the image which you can use
+  ///to upload image to the server
+  String? get imagePath => _imagePath.value;
 }

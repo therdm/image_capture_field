@@ -3,7 +3,8 @@ part of image_capture_field;
 class ImageCaptureField extends StatelessWidget {
   ImageCaptureField({
     Key? key,
-    required this.controller,
+    ImageCaptureController? controller,
+    this.onImagePathChanged,
     this.width,
     this.height,
     this.initialImage,
@@ -17,7 +18,10 @@ class ImageCaptureField extends StatelessWidget {
     this.iconEdit = Icons.edit,
     this.iconCamera = Icons.camera_alt,
     this.iconGallery = Icons.photo,
-  }) : super(key: key);
+  })  : controller = controller ?? ImageCaptureController(),
+        super(key: key);
+
+  final Function(String? onChanged)? onImagePathChanged;
 
   ///this is the height of the widget
   final double? width;
@@ -72,8 +76,8 @@ class ImageCaptureField extends StatelessWidget {
         imageQuality: imageQuality,
       );
 
-      controller.updatePickedImage(
-          await pickedFile?.readAsBytes(), pickedFile?.path);
+      controller.updatePickedImage(await pickedFile?.readAsBytes(), pickedFile?.path);
+      onImagePathChanged?.call(pickedFile?.path);
       print('Image Name: ${controller.imageName}');
       if (!kIsWeb) Navigator.of(context).pop();
     }
@@ -91,11 +95,11 @@ class ImageCaptureField extends StatelessWidget {
             _showLoading.value = false;
             Uint8List? result = await Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (ctx) => CropTheImage(
-                    aspectRatio: cropAspectRatio, inputImageData: value),
+                builder: (ctx) => CropTheImage(aspectRatio: cropAspectRatio, inputImageData: value),
               ),
             );
             controller.updatePickedImage(result, pickedFile.path);
+            onImagePathChanged?.call(pickedFile.path);
             print('Image Name: ${controller.imageName}');
             // if (onImageChanged != null) {
             //   onImageChanged!();
@@ -141,8 +145,7 @@ class ImageCaptureField extends StatelessWidget {
             : Stack(
                 children: [
                   Material(
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(borderRadiusValue)),
+                    borderRadius: BorderRadius.all(Radius.circular(borderRadiusValue)),
                     clipBehavior: Clip.hardEdge,
                     elevation: 6,
                     child: Container(
@@ -155,8 +158,7 @@ class ImageCaptureField extends StatelessWidget {
                           ? null
                           : controller.isBlank
                               ? initialImage!
-                              : Image(
-                                  image: MemoryImage(controller.imageData!)),
+                              : Image(image: MemoryImage(controller.imageData!)),
                     ),
                   ),
                   Positioned(
