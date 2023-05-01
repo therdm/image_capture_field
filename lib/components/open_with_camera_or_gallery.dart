@@ -4,11 +4,16 @@ class OpenWithCameraOrGallery extends StatelessWidget {
   final Function() onTapCamera;
   final Function() onTapGallery;
   final Color iconBackgroundColor;
+  final IconData iconCamera;
+  final IconData iconGallery;
+
   const OpenWithCameraOrGallery({
     Key? key,
     required this.onTapCamera,
     required this.onTapGallery,
     required this.iconBackgroundColor,
+    required this.iconCamera,
+    required this.iconGallery,
   }) : super(key: key);
 
   @override
@@ -36,14 +41,14 @@ class OpenWithCameraOrGallery extends StatelessWidget {
                 const SizedBox(width: 20),
                 OpenWithButton(
                   iconName: 'Camera',
-                  iconData: Icons.camera_alt,
+                  iconData: iconCamera,
                   onTap: onTapCamera,
                   iconBackgroundColor: iconBackgroundColor,
                 ),
                 const SizedBox(width: 30),
                 OpenWithButton(
                   iconName: 'Gallery',
-                  iconData: Icons.photo,
+                  iconData: iconGallery,
                   onTap: onTapGallery,
                   iconBackgroundColor: iconBackgroundColor,
                 ),

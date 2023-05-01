@@ -16,6 +16,11 @@ class ImageCaptureController {
       print('Image add un-successful');
     }
   }
+
+  clear() {
+    _pickedImageUInt8List.value = null;
+    _imageName = null;
+  }
   //
   // updatePickedImageWeb(PickedFile? file) async {
   //   if (file != null) {

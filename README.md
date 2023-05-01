@@ -2,31 +2,26 @@
 
 ImageCaptureField is as easy-to-use as a TextField which works with it's own controller to take image input with inbuilt optional image cropper
 
-## Simple to use: Just Follow 2 steps
+## Simple to use: Just Follow below 2 steps
 
 
-### 1. Define a ImageCaptureController
+### Step 1. Define a ImageCaptureController
 
 ```
 final _controller = ImageCaptureController();
 ```
 
-### 2. Put as a child of any child or may be as a children of Column
+### Step 2. Put as a child of any widget or may be as one of the children of a Column
 
 Just like below Code put it anywhere in your code
 
 ```
 ImageCaptureField(
     controller: _controller,
-    width: 300,
-    height: 200,
-    includeCropper: false,
-    borderRadiusValue: 10,
-    bottomRightDistance: 24,
 ),
 ```
                
-And it is DONE. You can NOW pick any image. <br />
+### And it is DONE. You can NOW pick any image.
 
 Access Image Data (Uint8List) by,
 
@@ -34,17 +29,25 @@ Access Image Data (Uint8List) by,
 _controller.imageData
 ```
 
-and Name of the Image can be found,
+Access Name of the Image can be found,
 
 ```
 _controller.imageName
 ```
 
-all the getters in the ImageCaptureController are <br />
-&nbsp; &nbsp;  `_controller.imageName => name of the picked image` <br />
-&nbsp; &nbsp;  `_controller.imageData => image data in Uint8List` <br />
-&nbsp; &nbsp;  `_controller.isBlank => there is any image already picked or not` <br />
-you can use where ever needed
+And Know whether there is any image already picked or not, 
+
+```
+_controller.isBlank
+```
+
+### Methods in the ImageCaptureController are
+
+To clear the data stored in the ImageCaptureController
+
+```
+_controller.clear();
+```
 
 ## Crop functionality added 
 

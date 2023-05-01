@@ -1,6 +1,6 @@
 name: image_capture_field
 description: ImageCaptureField is as easy-to-use as a TextField which works with it's own controller to take image input with inbuilt optional image cropper
-version: 0.2.0
+version: 0.2.4
 homepage: https://github.com/therdm95/image_capture_field
 
 environment:
@@ -21,7 +21,7 @@ dev_dependencies:
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
-# The following section is specific to Flutter.
+# The followi3ng section is specific to Flutter.
 flutter:
 
   # To add assets to your package, add an assets section, like this:

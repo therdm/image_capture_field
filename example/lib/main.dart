@@ -35,13 +35,7 @@ class Initializer extends StatelessWidget {
               SizedBox(height: 12),
               ImageCaptureField(
                 controller: _controller,
-                // initialImage: NetworkImage(
-                //     'https://bengalwomenproject.com/image/slide/img1.jpg'),
-                includeCropper: true,
-                // cropAspectRatio: 300 / 400,
-                borderRadiusValue: 4,
-                bottomRightDistance: 10,
-                iconBackgroundColor: Colors.red,
+                iconCamera: Icons.camera,
               ),
               SizedBox(height: 12),
               ElevatedButton(

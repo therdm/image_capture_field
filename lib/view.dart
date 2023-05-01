@@ -7,44 +7,59 @@ class ImageCaptureField extends StatelessWidget {
     this.width,
     this.height,
     this.initialImage,
+    // this.onChanged,
     this.cropAspectRatio,
     this.includeCropper = true,
-    this.imageQuality = 12,
+    this.imageQuality = 100,
     this.borderRadiusValue = 16,
     this.bottomRightDistance = 12,
     this.iconBackgroundColor = Colors.teal,
+    this.iconEdit = Icons.edit,
+    this.iconCamera = Icons.camera_alt,
+    this.iconGallery = Icons.photo,
   }) : super(key: key);
 
-  ///this [width] is the height of the widget
+  ///this is the height of the widget
   final double? width;
 
-  ///this [height] is the height of the widget
+  ///this is the height of the widget
   final double? height;
 
-  ///this [initialImage] if to set an initial image if not set
-  final ImageProvider? initialImage;
+  ///this is to set an initial image if not set
+  final Widget? initialImage;
 
-  ///this [cropAspectRatio] is the aspectRatio for the cropper
+  // final Function()? onChanged;
+
+  ///this is the aspectRatio for the cropper
   final double? cropAspectRatio;
 
-  ///depending on this [includeCropper] this Widget includes cropper or not
+  ///depending on this [includeCropper], decides this Widget includes cropper or not
   final bool includeCropper;
 
-  ///this [imageQuality] is the default image compressor of image_picker ranges from 0-100
+  ///this is the default image compressor of image_picker ranges from 0-100
   final int imageQuality;
 
-  ///this [borderRadiusValue] is the widget circular border radius value
+  ///this is the widget circular border radius value
   final double borderRadiusValue;
 
-  ///this [bottomRightDistance] is the distance from bottom and right side to the camera icon of the widget
+  ///this is the distance from bottom and right side to the camera icon of the widget
   final double bottomRightDistance;
 
   ///you need to pass a controller of type [ImageCaptureController] type
   ///to handle the image you picked
   final ImageCaptureController controller;
 
-  ///[iconBackgroundColor] defines what color will be there background of the icons
+  ///this defines what color will be there background of the icons
   final Color iconBackgroundColor;
+
+  ///this is to change edit icon of this widget
+  final IconData iconEdit;
+
+  ///this is to change camera icon of this widget
+  final IconData iconCamera;
+
+  ///this id to change gallery icon of this widget
+  final IconData iconGallery;
 
   final _picker = ImagePicker();
   final Rx<bool> _showLoading = false.obs;
@@ -81,6 +96,10 @@ class ImageCaptureField extends StatelessWidget {
               ),
             );
             controller.updatePickedImage(result, pickedFile.path);
+            print('Image Name: ${controller.imageName}');
+            // if (onImageChanged != null) {
+            //   onImageChanged!();
+            // }
           });
         } //if ends
       });
@@ -110,6 +129,8 @@ class ImageCaptureField extends StatelessWidget {
                         ? updateImageWithCropper(ImageSource.gallery)
                         : updateImageWOCropper(ImageSource.gallery);
                   },
+                  iconCamera: iconCamera,
+                  iconGallery: iconGallery,
                 );
               },
             );
@@ -132,11 +153,10 @@ class ImageCaptureField extends StatelessWidget {
                       decoration: BoxDecoration(color: Colors.grey),
                       child: (controller.isBlank && initialImage == null)
                           ? null
-                          : Image(
-                              image: controller.isBlank
-                                  ? initialImage!
-                                  : MemoryImage(controller.imageData!),
-                            ),
+                          : controller.isBlank
+                              ? initialImage!
+                              : Image(
+                                  image: MemoryImage(controller.imageData!)),
                     ),
                   ),
                   Positioned(
@@ -146,7 +166,7 @@ class ImageCaptureField extends StatelessWidget {
                       backgroundColor: iconBackgroundColor,
                       radius: 20,
                       child: Icon(
-                        Icons.camera_alt,
+                        iconEdit,
                         color: Colors.white,
                       ),
                     ),

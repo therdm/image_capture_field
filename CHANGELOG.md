@@ -1,3 +1,19 @@
+## 0.2.4
+
+default imageQuality is now set to 100
+
+## 0.2.3
+
+iconEdit, iconCamera, iconGallery properties added, you can now put your own there
+
+## 0.2.2
+
+initialImage is now widget type
+
+## 0.2.1
+
+ImageCaptureController has now a method called clear to clear the data stored in the ImageCaptureController
+
 ## 0.2.0
 
 width and height properties are no more required , and a new property initialImage (ImageProvider) added
