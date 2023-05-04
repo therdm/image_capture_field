@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
 class Initializer extends StatelessWidget {
   Initializer({Key? key}) : super(key: key);
   final _controller = ImageCaptureController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +35,11 @@ class Initializer extends StatelessWidget {
             children: [
               SizedBox(height: 12),
               ImageCaptureField(
-                controller: _controller,
+                // controller: _controller,
+                includeCropper: false,
+                onImagePathChanged: (path) {
+                  print('PATH: $path');
+                },
                 iconCamera: Icons.camera,
               ),
               SizedBox(height: 12),

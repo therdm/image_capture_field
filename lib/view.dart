@@ -5,6 +5,7 @@ class ImageCaptureField extends StatelessWidget {
     Key? key,
     ImageCaptureController? controller,
     this.onImagePathChanged,
+    this.onImageBytesChanged,
     this.width,
     this.height,
     this.initialImage,
@@ -21,7 +22,11 @@ class ImageCaptureField extends StatelessWidget {
   })  : controller = controller ?? ImageCaptureController(),
         super(key: key);
 
+  ///this will give you the path of the image when you are selecting any image
   final Function(String? onChanged)? onImagePathChanged;
+
+  ///this will give you the bytes[Uint8List] of the image when you are selecting any image
+  final Function(Uint8List? bytes)? onImageBytesChanged;
 
   ///this is the height of the widget
   final double? width;
@@ -71,24 +76,20 @@ class ImageCaptureField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     updateImageWOCropper(ImageSource imageSource) async {
-      PickedFile? pickedFile = await _picker.getImage(
+      XFile? pickedFile = await _picker.pickImage(
         source: imageSource,
         imageQuality: imageQuality,
       );
 
       controller.updatePickedImage(await pickedFile?.readAsBytes(), pickedFile?.path);
       onImagePathChanged?.call(pickedFile?.path);
+      onImageBytesChanged?.call(await pickedFile?.readAsBytes());
       print('Image Name: ${controller.imageName}');
       if (!kIsWeb) Navigator.of(context).pop();
     }
 
     updateImageWithCropper(ImageSource imageSource) {
-      _picker
-          .getImage(
-        source: imageSource,
-        imageQuality: imageQuality,
-      )
-          .then((pickedFile) {
+      _picker.pickImage(source: imageSource, imageQuality: imageQuality).then((pickedFile) {
         if (pickedFile != null) {
           _showLoading.value = true;
           pickedFile.readAsBytes().then((value) async {
@@ -100,6 +101,7 @@ class ImageCaptureField extends StatelessWidget {
             );
             controller.updatePickedImage(result, pickedFile.path);
             onImagePathChanged?.call(pickedFile.path);
+            onImageBytesChanged?.call(await pickedFile?.readAsBytes());
             print('Image Name: ${controller.imageName}');
             // if (onImageChanged != null) {
             //   onImageChanged!();
@@ -116,7 +118,7 @@ class ImageCaptureField extends StatelessWidget {
           if (kIsWeb) {
             includeCropper
                 ? updateImageWithCropper(ImageSource.gallery)
-                : updateImageWOCropper(ImageSource.camera);
+                : updateImageWOCropper(ImageSource.gallery);
           } else {
             showModalBottomSheet(
               context: context,

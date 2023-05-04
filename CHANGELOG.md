@@ -1,3 +1,7 @@
+## 0.3.0
+
+added onImageBytesChanged
+
 ## 0.2.5
 
 Package updated to latest version, and now controller have imagePath getter, 
