@@ -101,7 +101,7 @@ class ImageCaptureField extends StatelessWidget {
             );
             controller.updatePickedImage(result, pickedFile.path);
             onImagePathChanged?.call(pickedFile.path);
-            onImageBytesChanged?.call(await pickedFile?.readAsBytes());
+            onImageBytesChanged?.call(await pickedFile.readAsBytes());
             print('Image Name: ${controller.imageName}');
             // if (onImageChanged != null) {
             //   onImageChanged!();
